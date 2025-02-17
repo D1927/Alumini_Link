@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alumni Interaction Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #53d5dec9;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+    }
+
+    header img {
+      height: 80px; /* Set the height of the logo */
+      width: auto;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-text {
+      margin-left: 20px;
+      text-align: left;
+    }
+
+    .header-text h1 {
+      margin: 0;
+      font-size: 2rem;
+      font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .header-text p {
+      margin: 0;
+      font-size: 1rem;
+      font-family: Georgia, 'Times New Roman', Times, serif;
+    }
+
+    .header-right {
+      margin-left: auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    nav {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    nav a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 20px;
+      text-decoration: none;
+    }
+
+    nav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    #user-email {
+      padding: 14px 20px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    #logout-dropdown {
+      display: none;
+      position: absolute;
+      top: 35px;
+      right: 0;
+      background-color: #333;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #logout-dropdown a {
+      color: white;
+      padding: 10px 20px;
+      display: block;
+      text-decoration: none;
+    }
+
+    #logout-dropdown a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+
+    section {
+      padding: 20px;
+      margin: 10px;
+    }
+
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px;
+    }
+
+    .card h3 {
+      margin-top: 0;
+    }
+
+    .button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #45a049;
+    }
+
+    .qna-form, .event-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .qna-form input, .event-form input, .event-form textarea {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .event-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .meeting-link {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+    }
+
+    .meeting-section {
+      margin-top: 20px;
+    }
+
+    .meeting-link a {
+      color: #2191ed;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .delete-btn {
+      background-color: red;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+      background-color: darkred;
+    }
+
+    .button-container {
+      display: flex;
+      gap: 10px;
+    }
+
+    #custom-meeting-link {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    /* Chat section styles */
+    .chat-section {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .chat-section input, .chat-section button {
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .chat-messages {
+      margin-top: 20px;
+      height: 200px;
+      overflow-y: scroll;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .chat-message {
+      background-color: #f1f1f1;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+    }
+
+    /* Event section styles */
+    .event-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 10px 0;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Latest Industry Interview section styles */
+    .interview-section {
+      margin-top: 20px;
+    }
+
+    .interview-card {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <!-- Logo -->
+    <img src="logo.png" alt="AlumniLink Logo">
+
+    <!-- Website Name -->
+    <div class="header-text">
+      <h1>AlumniLink</h1>
+      <p>UNITY  |  EXCELLENCE  |  SUCCESS</p>
+    </div>
+  </div>
+
+  <!-- Logged-in User -->
+  <div class="header-right">
+    <span id="user-email">Login</span> <!-- Email will be displayed here after login -->
+  </div>
+</header>
+
+<nav>
+  <a href="#events">Events</a>
+  <a href="#qna">Q&A</a>
+  <a href="#trends">Current Trends</a>
+  <a href="#contact">Contact</a>
+  <div id="logout-dropdown">
+    <a href="#" id="logout-link">Logout</a>
+  </div>
+</nav>
+
+<!-- Current Meetings Section -->
+<section id="trends">
+  <div class="card">
+    <h3>Current Meetings</h3>
+    <p>Stay updated with the latest trends in IT, Recruitment and Guidance Session</p>
+    
+    <div class="meeting-section">
+      <div class="button-container">
+        <button class="button" onclick="createMeeting()">Generate Meeting</button>
+        <button class="button" onclick="publishMeetingLink()">Publish Meeting Link</button>
+      </div>
+
+      <div id="meeting-link" class="meeting-link" style="display:none;">
+        <a href="#" id="google-meet-link" target="_blank"></a>
+        <button class="delete-btn" onclick="deleteMeeting()">Delete</button>
+      </div>
+
+      <div id="add-meeting-link" style="display:none;">
+        <input type="text" id="custom-meeting-link" placeholder="Enter Google Meet link">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Chat Section -->
+<section id="chat">
+  <div class="card">
+    <h3>Chat with Alumni</h3>
+    <div class="chat-section">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-message">Welcome to the chat!</div>
+      </div>
+      <input type="text" id="chat-input" placeholder="Type a message...">
+      <button id="send_button" class="button" type="button">Send</button>
+      <button onclick = "window.location.href='prev_ques.html'" type = "button">View Previous Questions</button>
+      <div id="questions-container"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Organizing Event Section -->
+<section id="organize-event">
+  <div class="card">
+    <h3>Organize an Event</h3>
+    <p>Planning an event? Submit your event details here!</p>
+    <form class="event-form">
+      <input type="text" placeholder="Event Title">
+      <textarea placeholder="Event Description"></textarea>
+      <input type="date" placeholder="Event Date">
+      <button class="button">Submit Event</button>
+    </form>
+  </div>
+</section>
+
+<!-- Training Section -->
+<section id="training">
+  <div class="card">
+    <h3>Training Sessions</h3>
+    <p>Join a training session to enhance your skills!</p>
+    <button class="button">Join a Training</button>
+  </div>
+</section>
+
+<!-- Latest Industry Interviews Section -->
+<section id="interviews">
+  <div class="card">
+    <h3>Latest Industry Interviews</h3>
+    <div class="interview-section">
+      <div class="interview-card">
+        <h4>Interview with a Leading Tech Expert</h4>
+        <p>Insights into the future of technology and career growth.</p>
+        <button class="button">Watch Interview</button>
+      </div>
+      <div class="interview-card">
+        <h4>Interview with a Recruitment Specialist</h4>
+        <p>Tips on acing your job interviews and building a successful career.</p>
+        <button class="button">Watch Interview</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Alumni Event Section -->
+<section id="alumni-events">
+  <div class="card">
+    <h3>Upcoming Alumni Events</h3>
+    <div class="event-section">
+      <div class="event-card">
+        <h4>Alumni Networking Event</h4>
+        <p>Meet and network with your fellow alumni.</p>
+        <button class="button">Join Event</button>
+      </div>
+      <div class="event-card">
+        <h4>Annual Alumni Meet</h4>
+        <p>Reconnect with alumni and learn about new opportunities.</p>
+        <button class="button">Join Event</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer style="background-color: #333; color: white; padding: 20px 0; text-align: center;">
+  <div style="margin-bottom: 10px;">
+    <a href="mailto:info@alumnilink.com" style="color: white; text-decoration: none;">Contact Us</a> | 
+    <a href="#privacy" style="color: white; text-decoration: none;">Privacy Policy</a> | 
+    <a href="#terms" style="color: white; text-decoration: none;">Terms of Service</a>
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <a href="https://www.facebook.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Facebook</a>
+    <a href="https://twitter.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Twitter</a>
+    <a href="https://www.linkedin.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">LinkedIn</a>
+    <a href="https://www.instagram.com" target="_blank" style="color: white; text-decoration: none; margin: 0 10px;">Instagram</a>
+  </div>
+
+  <div style="font-size: 14px; margin-top: 20px;">
+    <p>&copy; 2025 AlumniLink. All Rights Reserved.</p>
+  </div>
+</footer>
+
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+  import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-auth.js";
+  import { getDatabase, ref, set, remove, onValue } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-database.js";
+
+  // Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyCHhlD6ACL5BmpCiEc45djneYCHbW4_qA0",
+    authDomain: "flexbase-f005f.firebaseapp.com",
+    databaseURL: "https://flexbase-f005f-default-rtdb.firebaseio.com",
+    projectId: "flexbase-f005f",
+    storageBucket: "flexbase-f005f.appspot.com",
+    messagingSenderId: "262222257146",
+    appId: "1:262222257146:web:7f7d361bc2446ae92c6243",
+    measurementId: "G-RN7B4JY2BS"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const database = getDatabase(app);
+
+  // Check if user is logged in or not
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // If user is authenticated, show their email
+      document.getElementById('user-email').textContent = user.email;
+      document.getElementById('user-email').onclick = toggleDropdown;
+    } else {
+      // Redirect to login page if not authenticated
+      window.location.href = 'login.html';
+    }
+  });
+
+  // Toggle dropdown visibility
+  function toggleDropdown() {
+    const dropdown = document.getElementById('logout-dropdown');
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+  }
+
+  // Logout function
+  document.getElementById('logout-link').onclick = function() {
+    signOut(auth).then(() => {
+      alert('Logged out successfully!');
+      window.location.href = 'login.html';  
+    }).catch((error) => {
+      alert('Error: ' + error.message);
+    });
+  };
+
+  // Google Meet creation function
+  window.createMeeting = function() {  
+    const googleMeetUrl = "https://meet.google.com/landing";
+    window.open(googleMeetUrl, "_blank");
+
+    setTimeout(() => {
+      const meetingLink = document.getElementById("google-meet-link");
+      const meetingSection = document.getElementById("meeting-link");
+
+      meetingLink.href = "https://meet.google.com/xyz-abc-def"; // Simulated meeting link
+      meetingLink.textContent = "https://meet.google.com/enter-meeting-id-&-publish";
+      meetingSection.style.display = "block";
+
+      document.getElementById("add-meeting-link").style.display = "block";
+    }, 3000);  
+  }
+
+  // Function to delete the meeting link from Firebase globally
+  window.deleteMeeting = function() {  
+    const meetingSection = document.getElementById("meeting-link");
+    meetingSection.style.display = "none"; 
+
+    // Remove the meeting link from Firebase globally
+    const meetingRef = ref(database, 'globalMeetingLink');  
+
+    remove(meetingRef)
+      .then(() => {
+        alert('Meeting link deleted from the database for all users');
+      })
+      .catch((error) => {
+        alert('Error deleting meeting link: ' + error.message);
+      });
+  }
+
+  // Function to publish the meeting link to Firebase globally
+  window.publishMeetingLink = function() {
+    const customLink = document.getElementById("custom-meeting-link").value;
+    if (customLink) {
+      const meetingLink = document.getElementById("google-meet-link");
+      meetingLink.href = customLink;
+      meetingLink.textContent = customLink;
+      document.getElementById("meeting-link").style.display = "block";  
+      document.getElementById("add-meeting-link").style.display = "none";  
+
+      // Save the custom link to Firebase globally
+      const meetingRef = ref(database, 'globalMeetingLink');
+      set(meetingRef, {
+        link: customLink
+      })
+      .then(() => {
+        alert('Meeting link added to the database for all users');
+      })
+      .catch((error) => {
+        alert('Error saving meeting link: ' + error.message);
+      });
+    } else {
+      alert("Please enter a valid Google Meet link.");
+    }
+  }
+
+  // Listen for changes to the meeting link in Firebase and update the page in real-time
+  const meetingRef = ref(database, 'globalMeetingLink');
+  onValue(meetingRef, (snapshot) => {
+    const meetingData = snapshot.val();
+    const meetingLink = document.getElementById("google-meet-link");
+    const meetingSection = document.getElementById("meeting-link");
+
+    if (meetingData && meetingData.link) {
+      meetingLink.href = meetingData.link;
+      meetingLink.textContent = meetingData.link;
+      meetingSection.style.display = "block";
+    } else {
+      meetingSection.style.display = "none";  // Hide the meeting section if the link is deleted
+    }
+  });
+
+  // Function to ask Question
+  function sendMessage() {
+  const messageInput = document.getElementById('chat-input');
+  const message = messageInput.value.trim();  
+
+  if (message) {
+
+    const new_Message = document.createElement('div');
+    new_Message.classList.add('chat-message');
+    new_Message.textContent = message;
+
+    const chat_container = document.getElementById('chat-messages');
+    chat_container.appendChild(new_Message);
+
+    chat_container.scrollTop = chat_container.scrollHeight;
+
+    messageInput.value = '';
+  }
+
+  const studentName = "IT";
+  console.log('Submitting message:', { student: studentName, question: message });
+
+}
+
+  document.getElementById('send_button').addEventListener('click', sendMessage); 
+
+  document.getElementById('chat-input').addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      sendMessage();
+    }
+
+  });
+
+
+  async function submitQuestion(student, question) {
+    const response = await fetch('http://localhost:4000/questions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ student, question }),
+    });
+    const data = await response.json();
+    console.log(data);
+  }
+
+</script>
+
+
+</body>
+</html>
